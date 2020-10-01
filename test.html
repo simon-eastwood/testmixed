@@ -1,62 +1,65 @@
 <html>
+
 <head>
 
-<script>
+    <script>
 
 
-function callCasex(applId) {
+        function callCasex(applId) {
 
-    // URL and parameters
-    const casexUrl = "http://localhost:8585/madras";
-    
-    // to test, comment out line above and uncomment one of the following
-    // const casexUrl = "http://httpbin.org/delay/10";
-    // const casexUrl = "http://httpbin.org/post";
-    var madrasparamStr = `applId=${applId}&appCode=CSX`;
-    
-    console.log ("call casex");
+            // URL and parameters
+            //const casexUrl = "http://localhost:8585/madras";
 
-    // timeout
-    const controller = new AbortController();
-    const signal = controller.signal;
-    setTimeout(() => controller.abort(), 5000);
+            // to test, comment out line above and uncomment one of the following
+            // const casexUrl = "http://httpbin.org/delay/10";
+            const casexUrl = "http://httpbin.org/post";
+            var madrasparamStr = `applId=${applId}&appCode=CSX`;
 
-    // the request
-    const request = new Request(casexUrl, {
-        method: 'POST', // *GET, POST, PUT, DELETE, etc.
-        mode: 'cors', // no-cors, *cors, same-origin
-        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: 'include', // include, *same-origin, omit
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        redirect: 'follow', // manual, *follow, error
-        referrer: 'no-referrer', // no-referrer, *client
-        body: madrasparamStr // body data type must match "Content-Type" header
-    })
+            console.log("call casex");
 
-    fetch(request,  
-            { signal }).then(function(response) {
-                        console.log("Call to casex sucessful");
-                        response.text().then(function(text) {
-                            console.log(text);
-                        });
-                     })
-                    .catch(function(error) {
-                        console.log("Call to casex failed");
-                        console.log (error);
-                        if (error.name === 'AbortError') {
-                            alert('Timeout trying to call Casexprima. Is it running?');
-                        } else {
-                            alert('Casexprima link failed with error: ' + error.message);
-                        }                            
+            // timeout
+            const controller = new AbortController();
+            const signal = controller.signal;
+            setTimeout(() => controller.abort(), 5000);
+
+            // the request
+            const request = new Request(casexUrl, {
+                method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                mode: 'cors', // no-cors, *cors, same-origin
+                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: 'include', // include, *same-origin, omit
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                redirect: 'follow', // manual, *follow, error
+                referrer: 'no-referrer', // no-referrer, *client
+                body: madrasparamStr // body data type must match "Content-Type" header
+            })
+
+            fetch(request,
+                { signal }).then(function (response) {
+                    console.log("Call to casex sucessful");
+                    response.text().then(function (text) {
+                        console.log(text);
                     });
+                })
+                .catch(function (error) {
+                    console.log("Call to casex failed");
+                    console.log(error);
+                    if (error.name === 'AbortError') {
+                        alert('Timeout trying to call Casexprima. Is it running?');
+                    } else {
+                        alert('Casexprima link failed with error: ' + error.message);
+                    }
+                });
 
-}
+        }
 
-</script>
+    </script>
 </head>
+
 <body>
-<a href="#" onclick="callCasex('EP1234556'); return false;">test</a>
+    <a href="#" onclick="callCasex('EP1234556'); return false;">test</a>
 </body>
+
 </html>
